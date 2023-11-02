@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-->마이바티스에서 설정 관련된 파일을 사용할거라는걸 명시해줘야함<-->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-->여기 오는 내용은 Environment부터 설정 객체에 매퍼 등록하는 내용까지의 내용이 들어감
+    아래 Environment는 여러개를 지정할 수 있음<-->
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"/>
+            <!-->커밋관련 설정(JDBC OR MANAGED) 하위에 값이 없으니 단일태그로 JDBC뒤에 /넣음<-->
+            <dataSource type="Pooled">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost/menu"/>
+                <property name="username" value="ohgiraffers"/>
+                <property name="password" value="ohgiraffes"/>
+            </dataSource>
+            <!-->연결객체 생성할때 필요한 정보들 입력(타입엔 Pooled, UnPooled)<-->
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="com/ohgiraffers/section01/xmlconfig/menu-mapper.xml"/>
+    </mappers>
+</configuration>

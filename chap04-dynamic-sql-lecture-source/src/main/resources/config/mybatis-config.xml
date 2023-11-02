@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--properties파일에 있는 내용을 가져오기-->
+    <properties resource="config/connection-info.properties"/>
+    <typeAliases><!--alias type 경로에 있는 파일을 별칭으로 만든거임-->
+        <typeAlias type="com.ohgiraffers.common.SearchCriteria" alias="SearchCriteria"/>
+    </typeAliases>
+    <!--환경설정-->
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+                    </dataSource>
+            <!--$표시는 파일에 있는 값을 가져올때 씀 #은 사용자가 입력하는 값 같은거-->
+        </environment>
+    </environments>
+    <!--쿼리문 파일이 여러개 생길때 package 사용 xml 폴더 안에 모든 xml 파일을 사용하겠다는 뜻-->
+    <mappers>
+        <package name="com.ohgiraffers.section01.xml"/>
+        <package name="com.ohgiraffers.section02.provider"/>
+    </mappers>
+
+</configuration>

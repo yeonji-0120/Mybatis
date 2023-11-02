@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-->쿼리에 대한 내용이 들어감 따라서 DOCTYPE(AKA. DTD) 이 달라짐<-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MenuMapper">
+    <!-->조회한 컬럼과 DTO를 매핑시키기 위한 설정 config 파일에서 alias설정을 추가하면 type설정에 full class명을 쓰지 않아도 된다.<-->
+
+    <resultMap id="menuResultMap" type="com.ohgiraffers.section01.xmlconfig.MenuDTO">
+        <id property="code" column="MENU_CODE"/> <!-->주키의 컬럼을 넣을때<-->
+        <result property="name" column="MENU_NAME"/>
+        <result property="price" column="MENU_PRICE"/>
+        <result property="categoryCode" column="CATEGORY_CODE"/>
+        <result property="orderableStatus" column="ORDERABLE_STATUS"/>
+    </resultMap>
+    <select id="selectAllMenu" resultMap="menuResultMap">
+        SELECT
+        menu_code, menu_name, menu_price, category_code, orderable_status
+        FROM
+        tbl_menu
+        WHERE
+        orderable_status = 'Y'
+        order by menu_code
+    </select>
+
+    <!-->마이 바티스는 기본적으로 preparedStatement로 요청함
+    resultType : 이미 정의 되어 있는 타입을 이용하여 리턴 타입으로 이용하는 경우 (DATE, STRING, INT 등)
+    resultMap : 위에서 생상한 resultMap를 리턴 타입으로 이용하는 경우
+    <-->
+
+    <select id="selectMenuByCode" resultMap="menuResultMap">
+        SELECT
+        menu_code, menu_name, menu_price, category_code, orderable_status
+        FROM
+        tbl_menu
+        WHERE
+        orderable_status = 'Y'
+        AND menu_code = #{code}
+        <!-->{} 안은 필드 명을 써야하고 반환하는 값이 하나면 이름 상관없음고 파라미터 타입 지정하지 않아도 됨 명시할땐 parameterType="_int" 언더바는 매핑된 타입의 별칭
+        null이 포함되면 Integer 포함 안되어 있으면 int<-->
+    </select>
+
+    <insert id="insertMenu" parameterType="com.ohgiraffers.section01.xmlconfig.MenuDTO">
+        <!-->성공하면 성공한 행의 갯수를 반환(정수형 _int)하기 때문에 result타입이 필요없음!
+        파라미터로 전달된 DTO의 필드명으로 값을 바인딩 해야함 그래서 파라미터 타입도 생략가능<-->
+        INSERT
+        INTO tbl_menu(
+        menu_name,
+        menu_price,
+        category_code,
+        orderable_status
+        )
+        VALUES(
+                #{name},<!-->이걸 바인드변수라고 함 이건 DAO에서 전달한 DTO 값임<-->
+                #{price},
+                #{categoryCode},
+                'Y'
+        )
+    </insert>
+
+    <update id="updateMenu">
+        UPDATE tbl_menu
+        SET
+        menu_name = #{name},
+        menu_price = #{price},
+        category_code = #{categoryCode}
+
+        WHERE
+        menu_code = #{code}
+
+
+
+    </update>
+
+    <delete id="deleteMenu" parameterType="_int">
+        DELETE
+        FROM tbl_menu
+        WHERE menu_code = #{code}
+    </delete>
+</mapper>
