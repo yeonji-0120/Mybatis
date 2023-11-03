@@ -1,6 +1,7 @@
 package com.ohgiraffers.common;
 
 public class MenuAndCategoryDTO {
+
     private int code;
     private String name;
     private int price;

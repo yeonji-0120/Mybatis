@@ -3,6 +3,7 @@ package com.ohgiraffers.common;
 import java.util.List;
 
 public class CategoryAndMenuDTO {
+
     private int code;
     private String name;
     private Integer refCategoryCode;
