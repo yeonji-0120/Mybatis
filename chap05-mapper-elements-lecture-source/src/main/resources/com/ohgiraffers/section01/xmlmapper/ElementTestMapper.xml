@@ -64,7 +64,7 @@
                                 NONE, PARTIAL, FULL 세 가지 옵션 설정이 가능하다.
     -->
 
-    <resultMap id="menuResultMap1" type="com.ohgiraffers.common.MenuDTO" autoMapping="false">
+    <resultMap id="menuResultMap1" type="com.ohgiraffers.common.MenuDTO">
         <id property="code" column="MENU_CODE"/>
         <result property="name" column="MENU_NAME"/>
         <result property="price" column="MENU_PRICE"/>
